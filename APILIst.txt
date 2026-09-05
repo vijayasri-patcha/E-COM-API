@@ -1,0 +1,5 @@
+Products
+ Get Products
+ Add a Product
+ Get one Product
+ Rate product

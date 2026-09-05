@@ -1,0 +1,117 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "description": "API for E-commerce application",
+    "title": "E-commerce API"
+  },
+
+  "servers": [
+    {
+      "url": "http://localhost:3200"
+    }
+  ],
+
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "token"
+      }
+    }
+  },
+
+  "paths": {
+
+    "/api/user/signin": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Login",
+        "description": "User login. JWT is stored in an HttpOnly cookie.",
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Login successful. JWT is stored in an HttpOnly cookie."
+          },
+          "400": {
+            "description": "Incorrect credentials"
+          }
+        }
+      }
+    },
+
+
+    "/api/user/signout": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logout",
+        "description": "Clears the JWT authentication cookie.",
+
+        "responses": {
+          "200": {
+            "description": "Logout successful"
+          }
+        }
+      }
+    },
+
+
+    "/api/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get products",
+        "description": "Get all products",
+
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Product not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}
